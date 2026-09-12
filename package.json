@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "tsx --watch src/index.ts",
+    "build": "tsdown",
     "server:inspect": "set DANGEROUSLY_OMIT_AUTH=true && npx @modelcontextprotocol/inspector http://127.0.0.1:3000/mcp",
     "format": "prettier --write \"**/*.{ts,md,json}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -44,6 +45,7 @@
     "drizzle-kit": "1.0.0-rc.4",
     "eslint": "^10.10.0",
     "globals": "^17.12.0",
+    "tsdown": "^0.23.0",
     "tsx": "^4.23.13",
     "typescript": "^7.0.2",
     "typescript-eslint": "^8.70.0"
