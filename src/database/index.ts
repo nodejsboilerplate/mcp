@@ -1,2 +1,2 @@
-export * from "./schemas";
+export * from "./tables";
 // export * from "./relations";
