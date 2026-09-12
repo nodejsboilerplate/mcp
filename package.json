@@ -1,0 +1,41 @@
+{
+  "name": "mcp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx --watch src/index.ts",
+    "server:inspect": "set DANGEROUSLY_OMIT_AUTH=true && npx @modelcontextprotocol/inspector http://127.0.0.1:3000/mcp",
+    "format": "prettier --write \"**/*.{ts,md,json}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodejsboilerplate/mcp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/nodejsboilerplate/mcp/issues"
+  },
+  "homepage": "https://github.com/nodejsboilerplate/mcp#readme",
+  "dependencies": {
+    "@modelcontextprotocol/node": "^2.0.0",
+    "@modelcontextprotocol/server": "^2.0.0",
+    "dotenv": "^17.4.2",
+    "prettier": "^3.9.6",
+    "zod": "^4.6.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@modelcontextprotocol/inspector": "^2.6.0",
+    "@types/node": "^22.20.2",
+    "eslint": "^10.10.0",
+    "globals": "^17.12.0",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "typescript-eslint": "^8.70.0"
+  }
+}
