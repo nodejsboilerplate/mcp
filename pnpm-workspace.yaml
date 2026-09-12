@@ -1,3 +1,6 @@
 allowBuilds:
   '@modelcontextprotocol/inspector': true
   esbuild: true
+onlyBuiltDependencies:
+  - esbuild
+  - '@modelcontextprotocol/inspector'

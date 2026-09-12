@@ -1,17 +1,12 @@
 FROM node:24-alpine AS base
 
-# ******************************SETUP PNPM*********************************
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-
 # ******************************INSTALLATION**************************************
 FROM base AS installer
 
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* pnpm-workspace.yaml* .npmrc* ./
 
 # Install project dependencies with frozen lockfile for reproducible builds
 RUN --mount=type=cache,target=/root/.npm \
@@ -36,8 +31,16 @@ WORKDIR /app
 COPY --from=installer /app/node_modules ./node_modules
 COPY . .
 
-ENV production
-RUN pnpm build
+ENV NODE_ENV=production
+RUN if [ -f package-lock.json ]; then \
+    npm run build; \
+  elif [ -f yarn.lock ]; then \
+    corepack enable yarn && yarn build; \
+  elif [ -f pnpm-lock.yaml ]; then \
+    corepack enable pnpm && pnpm build; \
+  else \
+    echo "No lockfile found." && exit 1; \
+  fi
 
 # ******************************RUN THE APP***********************************
 FROM base AS runner
