@@ -1,6 +1,6 @@
 import { McpRegistrar } from "@/blueprints";
 import { asyncToolHandler, MCPToolException, MCPToolResponse } from "@/lib";
-import { EquationZSchema, type AddNumberZType } from "@/zod/equation.zod";
+import { EquationZSchema, type AddNumberZType } from "@/zod";
 
 export class EquationTools extends McpRegistrar {
   static AddNumberToolName: string = "add_numbers";
@@ -19,7 +19,7 @@ export class EquationTools extends McpRegistrar {
           readOnlyHint: false,
         },
       },
-      asyncToolHandler(createReportTool)
+      asyncToolHandler(createHelloWorldTool)
     );
   }
 
@@ -28,7 +28,7 @@ export class EquationTools extends McpRegistrar {
   }
 }
 
-const createReportTool = async (payload: AddNumberZType) => {
+const createHelloWorldTool = async (payload: AddNumberZType) => {
   const { a, b } = payload;
 
   if (a < 20 || b < 10) {

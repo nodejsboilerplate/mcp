@@ -46,19 +46,19 @@ export abstract class VectorService {
     });
   }
 
-  protected async createVector<T, D extends Document>(data: T, metaData: { [key: string]: string }, collectionName: string, model: mongoose.Model<D>) {
+  protected async createVector<T, D extends Document>(
+    data: T,
+    metaData: { [key: string]: string },
+    collectionName: string,
+    model: mongoose.Model<D>
+  ) {
     const splitter = RecursiveCharacterTextSplitter.fromLanguage("markdown", {
       chunkSize: 500,
       chunkOverlap: 50,
     });
 
     const payload = typeof data === "string" ? data : JSON.stringify(data);
-    const output = await splitter.createDocuments(
-      [payload],
-      [
-        metaData,
-      ]
-    );
+    const output = await splitter.createDocuments([payload], [metaData]);
 
     const nativeCollection = mongoose.connection
       .getClient()
@@ -66,7 +66,6 @@ export abstract class VectorService {
       .collection(collectionName) as unknown as Collection;
 
     await MongoDBAtlasVectorSearch.fromDocuments(
-
       output,
       new VoyageEmbeddings({
         apiKey: baseConfig.VOYAGE_API_KEY,
@@ -84,7 +83,10 @@ export abstract class VectorService {
     await this.createSearchIndex(model, "default");
   }
 
-  protected async getResponseFromVectorSearch(query: string, collectionName: string): Promise<DocumentInterface[]> {
+  protected async getResponseFromVectorSearch(
+    query: string,
+    collectionName: string
+  ): Promise<DocumentInterface[]> {
     const collection = mongoose.connection
       .getClient()
       .db(mongoose.connection.name)
